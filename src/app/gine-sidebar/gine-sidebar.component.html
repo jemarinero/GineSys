@@ -1,0 +1,16 @@
+<mat-drawer-container fullscreen>
+  <mat-drawer #drawer mode="push" class="gine-drawer" >
+    <p>Auto-resizing sidenav</p>
+  </mat-drawer>
+  <mat-toolbar color="primary" class="fixed-header" >
+    <button mat-button (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button> 
+    <div>
+      GineSys
+    </div>
+  </mat-toolbar>
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>
