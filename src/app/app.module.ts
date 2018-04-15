@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { 
   MatToolbarModule,
   MatIconModule,
@@ -12,7 +12,9 @@ import {
   MatTableModule,
   MatFormFieldModule,
   MatInputModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatTooltipModule,
+  MatDialogModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,7 +27,9 @@ import { HomeComponent } from './home/home.component';
 import { GineMenuComponent } from './gine-menu/gine-menu.component';
 import { OcupacionesComponent } from './ocupaciones/ocupaciones.component';
 import { OcupacionesService } from './services/ocupaciones.service';
-
+import { AppErrorHandler } from './common/app-error-handler';
+import { OcupacionFormComponent } from './ocupacion-form/ocupacion-form.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -33,13 +37,18 @@ import { OcupacionesService } from './services/ocupaciones.service';
     GineSidebarComponent,
     HomeComponent,
     GineMenuComponent,
-    OcupacionesComponent
+    OcupacionesComponent,
+    OcupacionFormComponent
+  ],
+  entryComponents: [
+    OcupacionFormComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,
     HttpModule,
+    FormsModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
@@ -52,14 +61,17 @@ import { OcupacionesService } from './services/ocupaciones.service';
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
+    MatTooltipModule,
+    MatDialogModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
-      { path: 'ocupaciones', component: OcupacionesComponent },   
+      { path: 'ocupaciones', component: OcupacionesComponent },
       { path: '**', component: HomeComponent }      
     ])
   ],
   providers: [
-    OcupacionesService
+    OcupacionesService,
+     { provide: ErrorHandler, useClass: AppErrorHandler}
   ],
   bootstrap: [AppComponent]
 })

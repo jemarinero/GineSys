@@ -1,8 +1,19 @@
-<div class="ocupaciones-table-container mat-elevation-z8">
+<h1>Ocupaciones</h1>
+<div class="gine-page-container mat-elevation-z8">
   <div class="ocupaciones-table-header">
-    <button mat-raised-button color="primary">
+    <button 
+      (click)="getOcupaciones()"
+      mat-mini-fab 
+      color="primary"
+      matTooltip="Actualizar">
+      <mat-icon>refresh</mat-icon>
+    </button>
+    <button 
+      mat-mini-fab 
+      color="primary"
+      matTooltip="Agregar Nuevo"
+      (click)="openOcupacionDialog()">
       <mat-icon>add_circle_outline</mat-icon>
-      Nuevo
     </button>
     <mat-form-field>
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar...">
@@ -12,14 +23,22 @@
   <mat-table #table [dataSource]="dataSource">
 
     <!-- Position Column -->
-    <ng-container matColumnDef="actions">
+    <ng-container matColumnDef="actions" item-width="50px">
       <mat-header-cell *matHeaderCellDef>
       </mat-header-cell>
       <mat-cell *matCellDef="let element">
-          <a mat-icon-button color="accent" routerLink=".">
+          <a 
+            mat-icon-button 
+            color="accent" 
+            (click)="openOcupacionDialog(element)"
+            matTooltip="Modificar">
             <mat-icon>edit</mat-icon>
           </a>
-          <a mat-icon-button color="warn" routerLink=".">
+          <a 
+            mat-icon-button 
+            color="warn" 
+            routerLink="."
+            matTooltip="Borrar">
             <mat-icon>delete</mat-icon>
           </a>
       </mat-cell>
@@ -40,13 +59,13 @@
     <!-- Weight Column -->
     <ng-container matColumnDef="fechaCreacion">
       <mat-header-cell *matHeaderCellDef> Fecha Creacion </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.fechaCreacion}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.fechaCreacion | date: 'dd/MM/yyyy h:mma'}} </mat-cell>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="fechaModificacion">
       <mat-header-cell *matHeaderCellDef> Fecha Modificacion </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.fechaModificacion}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.fechaModificacion | date: 'dd/MM/yyyy h:mma'}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="usuarioCreacion">
@@ -66,6 +85,7 @@
   <mat-paginator #paginator
                  [pageSize]="5"
                  [pageSizeOptions]="[5, 10, 20]"
-                 [showFirstLastButtons]="true">
+                 [showFirstLastButtons]="true"
+                 >
   </mat-paginator>
 </div>

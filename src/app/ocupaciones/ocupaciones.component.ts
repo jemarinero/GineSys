@@ -1,15 +1,16 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { OcupacionesService } from './../services/ocupaciones.service';
 import { Ocupacion } from './../models/ocupacion';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
+import { OcupacionFormComponent } from './../ocupacion-form/ocupacion-form.component';
 
 @Component({
   selector: 'ocupaciones',
   templateUrl: './ocupaciones.component.html',
   styleUrls: ['./ocupaciones.component.css']
 })
-export class OcupacionesComponent implements OnInit {
+export class OcupacionesComponent implements OnInit, OnDestroy {
   ocupaciones: Ocupacion[];
   displayedColumns = ['actions','ocupacionId', 'descripcion', 'fechaCreacion', 'fechaModificacion', 'usuarioCreacion', 'usuarioModificacion'];
   dataSource = new MatTableDataSource<Ocupacion>();
@@ -18,15 +19,21 @@ export class OcupacionesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(private ocupacionesService: OcupacionesService) { 
-    this.getOcupaciones();
+  constructor(
+    private ocupacionesService: OcupacionesService,
+    private dialog: MatDialog  
+  ) { 
+    
     
   }
 
   ngOnInit() {
-    
+    this.getOcupaciones();
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
   getOcupaciones() {
     this.subscription = this.ocupacionesService.getAll()
       .subscribe(ocupaciones => {
@@ -46,5 +53,19 @@ export class OcupacionesComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  
+  openOcupacionDialog(ocupacion?) {
+      this.dialog.open(OcupacionFormComponent,{
+        width: '500px',
+        data: ocupacion ? ocupacion : {}
+      })
+      .afterClosed()
+      .subscribe(res => {
+        if(res.ocupacionId){
+          this.ocupacionesService.update(res)
+            .subscribe(res => {
+              console.log(res);
+            });
+        }
+      });
+  }
 }

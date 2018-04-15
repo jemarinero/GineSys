@@ -1,0 +1,29 @@
+<form #f="ngForm">
+  <h3>Ocupacion</h3>
+  <div class="gine-page-container mat-elevation-z4">
+    <div *ngIf="ocupacion.ocupacionId">
+      <mat-form-field>
+        <input matInput placeholder="Ocupacion Id" [(ngModel)]="ocupacion.ocupacionId" name="ocupacionId" #ocupacionId="ngModel" readonly>
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <input matInput placeholder="Descripcion" [(ngModel)]="ocupacion.descripcion" name="descripcion" #descripcion="ngModel" >
+    </mat-form-field>
+    <div *ngIf="ocupacion.ocupacionId">
+      <mat-form-field>
+        <input matInput placeholder="Fecha Creacion" [(ngModel)]="ocupacion.fechaCreacion" name="fechaCreacion" #fechaCreacion="ngModel" readonly>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Usuario Creacion" [(ngModel)]="ocupacion.usuarioCreacion" name="usuarioCreacion" #usuarioCreacion="ngModel" readonly>
+      </mat-form-field>
+    </div>
+    <div class="gine-button-row">
+      <button type="button" mat-mini-fab color="primary" matTooltip="Guardar" [matDialogClose]="f.value">
+        <mat-icon>save</mat-icon>
+      </button>
+      <button type="button" mat-mini-fab color="warn" matTooltip="Cancelar" matDialogClose>
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
+  </div>
+</form>

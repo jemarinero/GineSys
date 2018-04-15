@@ -1,17 +1,17 @@
 <mat-drawer-container fullscreen>
   <mat-drawer #drawer mode="over" class="gine-drawer" >
     <mat-toolbar-row>
-        <mat-toolbar color="primary" class="fixed-header">
+        <mat-toolbar color="primary" class="fixed-header mat-elevation-z4">
           <span>GineSys</span>
           <span class="drawer-toolbar-spacer"></span>
-          <button mat-button (click)="drawer.toggle()" class="drawer-button-back">
+          <button mat-icon-button (click)="drawer.toggle()" class="drawer-button-back">
             <mat-icon>arrow_back</mat-icon>
           </button>
         </mat-toolbar>
     </mat-toolbar-row>
     <gine-menu></gine-menu>
   </mat-drawer>
-  <mat-toolbar color="primary" class="fixed-header" >
+  <mat-toolbar color="primary" class="fixed-header mat-elevation-z4" >
     <button mat-button (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button> 

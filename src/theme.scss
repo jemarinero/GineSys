@@ -1,14 +1,14 @@
 @import "~@angular/material/_theming";
 
-@include mat-core();
+// @include mat-core();
 
-$app-primary: mat-palette($mat-indigo,900);
-$app-accent: mat-palette($mat-light-blue,500);
-$app-warm: mat-palette($mat-red);
+// $app-primary: mat-palette($mat-indigo,900);
+// $app-accent: mat-palette($mat-light-blue,500);
+// $app-warm: mat-palette($mat-red);
 
-$app-theme: mat-light-theme($app-primary,$app-accent,$app-warm);
+// $app-theme: mat-light-theme($app-primary,$app-accent,$app-warm);
 
-@include angular-material-theme($app-theme);
+// @include angular-material-theme($app-theme);
 
 //  .mat-drawer {
 //      background-color:#03a9f4;
@@ -16,3 +16,25 @@ $app-theme: mat-light-theme($app-primary,$app-accent,$app-warm);
 //  .mat-drawer.mat-drawer-push {
 //     background-color: #03a9f4;
 // }
+.mat-cell:nth-child(1),
+.mat-header-cell:nth-child(1),
+{
+    flex: 0 0 100px;
+}
+
+.gine-page-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    padding: 5px;
+  }
+
+  .gine-button-row {
+    display: flex;
+    align-items: right;
+    justify-content: flex-end;
+  }
+
+  .gine-button-row button {
+      margin-left: 10px;
+  }

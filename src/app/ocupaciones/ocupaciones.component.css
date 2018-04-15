@@ -1,9 +1,5 @@
 /* Structure */
-.ocupaciones-table-container {
-    display: flex;
-    flex-direction: column;
-    min-width: 300px;
-  }
+
   
   .ocupaciones-table-header {
     min-height: 64px;
