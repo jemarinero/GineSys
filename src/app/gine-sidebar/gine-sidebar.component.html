@@ -1,13 +1,26 @@
 <mat-drawer-container fullscreen>
-  <mat-drawer #drawer mode="push" class="gine-drawer" >
-    <p>Auto-resizing sidenav</p>
+  <mat-drawer #drawer mode="over" class="gine-drawer" >
+    <mat-toolbar-row>
+        <mat-toolbar color="primary" class="fixed-header">
+          <span>GineSys</span>
+          <span class="drawer-toolbar-spacer"></span>
+          <button mat-button (click)="drawer.toggle()" class="drawer-button-back">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+        </mat-toolbar>
+    </mat-toolbar-row>
+    <gine-menu></gine-menu>
   </mat-drawer>
   <mat-toolbar color="primary" class="fixed-header" >
     <button mat-button (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button> 
     <div>
-      GineSys
+      <button type="button" mat-button routerLink="/" >
+        <mat-icon>home</mat-icon>
+        GineSys
+      </button>
+      
     </div>
   </mat-toolbar>
   <div class="main-content">

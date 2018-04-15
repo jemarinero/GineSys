@@ -11,6 +11,14 @@
 }
 
 .main-content {
-    margin-top: 40px;
+    margin-top: 60px;
     padding: 20px;
 }
+
+.drawer-button-back {
+    padding: 0;
+}
+
+.drawer-toolbar-spacer {
+    flex: 1 1 auto;
+  }
