@@ -7,6 +7,6 @@ import { DataService } from './data.service';
 export class OcupacionesService extends DataService {
   
   constructor(http: Http) {
-    super('http://localhost:8010/api/ocupaciones',http);
+    super('http://localhost:8020/api/ocupaciones',http);
   }
 }

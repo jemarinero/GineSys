@@ -7,9 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GineSidebarComponent implements OnInit {
   showFiller = false;
+
   constructor() { }
 
   ngOnInit() {
   }
-
 }

@@ -1,0 +1,20 @@
+<div class="gine-page-container  mat-elevation-z4">
+    <h2 mat-dialog-title>¿Está seguro que desea eliminar el registro?</h2>
+    <mat-dialog-content>Información: {{ info }}</mat-dialog-content>
+</div>
+<div class="gine-button-row">
+  <button 
+    mat-mini-fab 
+    [mat-dialog-close]="true" 
+    matTooltip="Si"
+    color="primary">
+    <mat-icon>check</mat-icon>
+  </button>
+  <button 
+    mat-mini-fab 
+    mat-dialog-close 
+    matTooltip="No"
+    color="warn">
+    <mat-icon>cancel</mat-icon>
+  </button>
+</div>

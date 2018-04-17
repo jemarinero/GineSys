@@ -4,14 +4,18 @@
       (opened)="panelOpenState = true"
       (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
-        <mat-panel-title>
+        <mat-panel-title active>
           {{ em.title }}
         </mat-panel-title>
       </mat-expansion-panel-header>
-  
-      <mat-nav-list>
-        <a *ngFor="let link of em.subMenus" mat-list-item [routerLink]="link.route" > {{ link.title }} </a>
-     </mat-nav-list>
+      <mat-panel-description>
+          <mat-nav-list>
+            <a 
+              *ngFor="let link of em.subMenus" 
+              mat-list-item [routerLink]="link.route" 
+              (click)="toggleFiller()"> {{ link.title }} </a>
+          </mat-nav-list>
+      </mat-panel-description>
     </mat-expansion-panel>
   </mat-accordion>
   

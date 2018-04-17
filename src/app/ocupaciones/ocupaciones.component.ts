@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { GineDeleteWarningComponent } from './../gine-delete-warning/gine-delete-warning.component';
+import { Component, OnInit, ViewChild, OnDestroy, ViewContainerRef } from '@angular/core';
 import { OcupacionesService } from './../services/ocupaciones.service';
 import { Ocupacion } from './../models/ocupacion';
-import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog, MatPaginatorIntl } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 import { OcupacionFormComponent } from './../ocupacion-form/ocupacion-form.component';
+import { ToastsManager } from 'ng2-toastr';
 
 @Component({
   selector: 'ocupaciones',
@@ -21,10 +23,11 @@ export class OcupacionesComponent implements OnInit, OnDestroy {
 
   constructor(
     private ocupacionesService: OcupacionesService,
-    private dialog: MatDialog  
+    private dialog: MatDialog,
+    public toastr: ToastsManager,
+    vcr: ViewContainerRef
   ) { 
-    
-    
+    this.toastr.setRootViewContainerRef(vcr);
   }
 
   ngOnInit() {
@@ -59,13 +62,52 @@ export class OcupacionesComponent implements OnInit, OnDestroy {
         data: ocupacion ? ocupacion : {}
       })
       .afterClosed()
-      .subscribe(res => {
-        if(res.ocupacionId){
-          this.ocupacionesService.update(res)
-            .subscribe(res => {
-              console.log(res);
-            });
-        }
+      .subscribe(ocupacion => {
+          this.save(ocupacion);
       });
+  }
+
+  save(ocupacion: Ocupacion){
+    if(ocupacion){
+      if(ocupacion.ocupacionId)
+      {
+        ocupacion.usuarioModificacion = 'jemarinero'
+        this.ocupacionesService
+          .update(ocupacion.ocupacionId,ocupacion)
+          .subscribe(ocupacion => {
+            if(ocupacion){
+              this.toastr.success('Ocupación: '+ocupacion.ocupacionId+': '+ocupacion.descripcion+'. Actualizado correctamente.','Actualización');
+              this.getOcupaciones();
+            }
+          });
+      }
+      else{
+        ocupacion.usuarioCreacion = 'jemarinero'
+        this.ocupacionesService.create(ocupacion).subscribe(ocupacion => {
+          if(ocupacion){
+            this.toastr.success('Ocupación: '+ocupacion.ocupacionId+': '+ocupacion.descripcion+'. Creado correctamente.','Creación');
+            this.getOcupaciones();
+          }
+        });
+      }
+    }
+  }
+
+  openDeleteDialog(ocupacion) {
+    this.dialog.open(GineDeleteWarningComponent,{
+      width: '500px',
+      data: ocupacion.descripcion
+    })
+    .afterClosed()
+    .subscribe(res => {
+      if(res){
+        this.ocupacionesService
+          .delete(ocupacion.ocupacionId)
+          .subscribe(ocupacion => {
+            this.toastr.success('Ocupación: '+ocupacion.ocupacionId+': '+ocupacion.descripcion+'. Eliminado correctamente.','Eliminación');
+            this.getOcupaciones();
+          });
+      }
+    })
   }
 }

@@ -37,6 +37,7 @@
           <a 
             mat-icon-button 
             color="warn" 
+            (click)="openDeleteDialog(element)"
             routerLink="."
             matTooltip="Borrar">
             <mat-icon>delete</mat-icon>
@@ -83,7 +84,7 @@
   </mat-table>
 
   <mat-paginator #paginator
-                 [pageSize]="5"
+                 [pageSize]="10"
                  [pageSizeOptions]="[5, 10, 20]"
                  [showFirstLastButtons]="true"
                  >

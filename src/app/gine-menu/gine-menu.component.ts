@@ -1,20 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'gine-menu',
   templateUrl: './gine-menu.component.html',
   styleUrls: ['./gine-menu.component.css']
 })
-export class GineMenuComponent implements OnInit {
+export class GineMenuComponent {
   panelOpenState: boolean = false;
   expandableMenu: any[] = [];
+  selectedMenu: string;
+
+  @Input('drawer') drawer;
 
   constructor() {
     this.initMenu();
    }
-
-  ngOnInit() {
-  }
 
   initMenu() {
     this.expandableMenu = [
@@ -28,5 +28,9 @@ export class GineMenuComponent implements OnInit {
         ]
       }
     ];
+  }
+
+  toggleFiller(){
+    this.drawer.toggle();
   }
 }

@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 import { AppComponent } from './app.component';
 import { GineSidebarComponent } from './gine-sidebar/gine-sidebar.component';
@@ -30,6 +31,7 @@ import { OcupacionesService } from './services/ocupaciones.service';
 import { AppErrorHandler } from './common/app-error-handler';
 import { OcupacionFormComponent } from './ocupacion-form/ocupacion-form.component';
 import { FormsModule } from '@angular/forms';
+import { GineDeleteWarningComponent } from './gine-delete-warning/gine-delete-warning.component';
 
 @NgModule({
   declarations: [
@@ -38,10 +40,12 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     GineMenuComponent,
     OcupacionesComponent,
-    OcupacionFormComponent
+    OcupacionFormComponent,
+    GineDeleteWarningComponent
   ],
   entryComponents: [
-    OcupacionFormComponent
+    OcupacionFormComponent,
+    GineDeleteWarningComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +67,7 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatTooltipModule,
     MatDialogModule,
+    ToastModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'ocupaciones', component: OcupacionesComponent },
