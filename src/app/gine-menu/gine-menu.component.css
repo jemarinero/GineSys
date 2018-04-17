@@ -2,6 +2,6 @@
     width: 100%;
 }
 
-.selected-menu {
-    color: pink;
+.mat-expansion-panel-header.mat-expanded {
+    border: 1px solid #c2c2c2;
 }

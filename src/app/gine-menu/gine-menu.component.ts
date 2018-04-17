@@ -24,6 +24,23 @@ export class GineMenuComponent {
           {
             title: 'Ocupaciones',
             route: '/ocupaciones'
+          },
+          {
+            title: 'Ocupaciones',
+            route: '/ocupaciones'
+          },
+          {
+            title: 'Ocupaciones',
+            route: '/ocupaciones'
+          }
+        ]
+      },
+      { 
+        title: 'Configuracion 2',
+        subMenus: [
+          {
+            title: 'Ocupaciones',
+            route: '/ocupaciones'
           }
         ]
       }
