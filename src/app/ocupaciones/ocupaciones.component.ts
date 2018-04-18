@@ -1,3 +1,4 @@
+import { AppError } from './../common/app-error';
 import { GineDeleteWarningComponent } from './../gine-delete-warning/gine-delete-warning.component';
 import { Component, OnInit, ViewChild, OnDestroy, ViewContainerRef } from '@angular/core';
 import { OcupacionesService } from './../services/ocupaciones.service';
@@ -14,7 +15,15 @@ import { ToastsManager } from 'ng2-toastr';
 })
 export class OcupacionesComponent implements OnInit, OnDestroy {
   ocupaciones: Ocupacion[];
-  displayedColumns = ['actions','ocupacionId', 'descripcion', 'fechaCreacion', 'fechaModificacion', 'usuarioCreacion', 'usuarioModificacion'];
+  displayedColumns = [
+    'actions',
+    'ocupacionId', 
+    'descripcion', 
+    'fechaCreacion', 
+    'fechaModificacion', 
+    'usuarioCreacion', 
+    'usuarioModificacion'
+  ];
   dataSource = new MatTableDataSource<Ocupacion>();
   subscription: Subscription; 
 
@@ -67,29 +76,12 @@ export class OcupacionesComponent implements OnInit, OnDestroy {
       });
   }
 
-  save(ocupacion: Ocupacion){
-    if(ocupacion){
+  save(ocupacion: Ocupacion) {
+    if(ocupacion) {
       if(ocupacion.ocupacionId)
-      {
-        ocupacion.usuarioModificacion = 'jemarinero'
-        this.ocupacionesService
-          .update(ocupacion.ocupacionId,ocupacion)
-          .subscribe(ocupacion => {
-            if(ocupacion){
-              this.toastr.success('Ocupación: '+ocupacion.ocupacionId+': '+ocupacion.descripcion+'. Actualizado correctamente.','Actualización');
-              this.getOcupaciones();
-            }
-          });
-      }
-      else{
-        ocupacion.usuarioCreacion = 'jemarinero'
-        this.ocupacionesService.create(ocupacion).subscribe(ocupacion => {
-          if(ocupacion){
-            this.toastr.success('Ocupación: '+ocupacion.ocupacionId+': '+ocupacion.descripcion+'. Creado correctamente.','Creación');
-            this.getOcupaciones();
-          }
-        });
-      }
+        this.update(ocupacion);
+      else
+        this.create(ocupacion);
     }
   }
 
@@ -100,14 +92,47 @@ export class OcupacionesComponent implements OnInit, OnDestroy {
     })
     .afterClosed()
     .subscribe(res => {
-      if(res){
-        this.ocupacionesService
-          .delete(ocupacion.ocupacionId)
-          .subscribe(ocupacion => {
-            this.toastr.success('Ocupación: '+ocupacion.ocupacionId+': '+ocupacion.descripcion+'. Eliminado correctamente.','Eliminación');
-            this.getOcupaciones();
-          });
+      if(res) {
+       this.delete(ocupacion);
       }
-    })
+    });
+  }
+
+  create(ocupacion: Ocupacion) {
+    ocupacion.usuarioCreacion = 'jemarinero'
+    this.ocupacionesService
+      .create(ocupacion)
+      .subscribe(createdOcupacion => {
+        this.toastr.success('Ocupación: '+createdOcupacion.ocupacionId+': '+createdOcupacion.descripcion+'. Creado correctamente.','Creación');
+        this.getOcupaciones();
+      }, 
+      (error: AppError) => {
+        this.toastr.error(error.originalError,'Ocurrió un error!');
+      });
+  }
+
+  update(ocupacion: Ocupacion) {
+    ocupacion.usuarioModificacion = 'jemarinero'
+    this.ocupacionesService
+      .update(ocupacion.ocupacionId,ocupacion)
+      .subscribe(updatedOcupacion => {
+          this.toastr.success('Ocupación: '+updatedOcupacion.ocupacionId+': '+updatedOcupacion.descripcion+'. Actualizado correctamente.','Actualización');
+          this.getOcupaciones();
+      }, (error: AppError) => {
+        this.toastr.error(error.originalError,'Ocurrió un error!');
+      });
+  }
+
+  delete(ocupacion: Ocupacion) {
+    this.ocupacionesService
+        .delete(ocupacion.ocupacionId)
+        .subscribe(deletedOcupacion => {
+          this.toastr.success('Ocupación: '+deletedOcupacion.ocupacionId+': '+deletedOcupacion.descripcion+'. Eliminado correctamente.','Eliminación');
+          this.getOcupaciones();
+        }, 
+        (error: AppError) => {
+          this.toastr.error(error.originalError,'Ocurrió un error!');
+          this.getOcupaciones();
+        });
   }
 }
